@@ -14,13 +14,24 @@ namespace RapidPayITL.Service
         }
 
 
-        public async Task<ProcessorResponse> CreateCard(Card newCard)
+        public async Task<ProcessorResponse> CreateCard(NewCard newCard)
         {
-            return new ProcessorResponse
+            try
             {
-                Success = true,
-                Message = "The card has been successfully created"
-            };
+
+
+                return new ProcessorResponse
+                {
+                    Success = true,
+                    Message = "The card has been successfully created"
+                };
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+
+
         }
 
         public async Task<CardBalance> GetCardBalance(string cardNumber)

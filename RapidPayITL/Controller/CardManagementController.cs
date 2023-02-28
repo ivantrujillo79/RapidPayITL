@@ -15,7 +15,7 @@ namespace RapidPayITL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Card newCard)
+        public async Task<IActionResult> Create(NewCard newCard)
         {
             var result = await _cardManagementService.CreateCard(newCard);
             return Ok();

@@ -2,7 +2,7 @@
 
 namespace RapidPayITL.Model
 {
-    public class Card
+    public class NewCard
     {
         [Required] 
         [StringLength(15, ErrorMessage = "Incorrect Card number, it must be 15 digits long", MinimumLength = 15)]
