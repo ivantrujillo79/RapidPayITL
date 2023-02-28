@@ -44,12 +44,33 @@ namespace RapidPayITL.Service
         {
             try
             {
+                var returnedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == payment.CardNumber);
 
+                if (returnedCard != null)
+                {
+                    var newEntityPayment = new Payment
+                    {
+                        CardNumber = payment.CardNumber,
+                        Amount = payment.Amount,
+                        PaymentDate = payment.PaymentDate,
+                        PaymentBeneficiary = payment.PaymentBeneficiary
+                    };
+
+                    returnedCard.Payments.Add(newEntityPayment);
+                    await _rapidPayDbContext.SaveChangesAsync();
+
+                    return new ProcessorResponse
+                    {
+                        Success = true,
+                        Message = $"The card {payment.CardNumber} has been successfully charged with ${payment.Amount.ToString()}."
+                    };
+                }
 
                 return new ProcessorResponse
                 {
                     Success = true,
-                    Message = $"The card {payment.CardNumber} has been successfully charged with ${payment.Amount.ToString()}."
+                    //Given the card number was not found, the transaction details are not returned given it can lead to a security breach
+                    Message = $"Error: The charge has been been rejected."
                 };
             }
             catch (Exception)
@@ -57,7 +78,6 @@ namespace RapidPayITL.Service
                 throw;
             }
         }
-
 
         public async Task<CardBalance> GetCardBalance(string cardNumber)
         {
@@ -86,9 +106,6 @@ namespace RapidPayITL.Service
             {
                 throw;
             }
-
         }
-
-
     }
 }
