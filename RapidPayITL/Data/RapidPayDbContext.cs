@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RapidPayITL.Data.Entity;
 
 namespace RapidPayITL.Data
 {
@@ -13,5 +14,8 @@ namespace RapidPayITL.Data
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }

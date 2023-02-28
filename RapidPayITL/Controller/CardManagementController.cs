@@ -11,7 +11,7 @@ namespace RapidPayITL.Controllers
         [HttpGet]
         public async Task<IActionResult> Balance(string cardNumber)
         {
-            return Ok();
+            return Ok("Good");
         }
     }
 }
