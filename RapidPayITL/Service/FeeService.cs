@@ -2,7 +2,10 @@
 {
     public class FeeService
     {
+        private decimal currentFeeFactor = 0.01M;
         private static System.Timers.Timer FeeTimer = new System.Timers.Timer(100);
+
+        public decimal FeeFactor { get => currentFeeFactor; }
 
 
 
@@ -16,7 +19,7 @@
 
         private void CalculateFeeAmount(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            throw new NotImplementedException();
+            this.currentFeeFactor = 500.0M;
         }
     }
 }

@@ -13,6 +13,8 @@ namespace RapidPayITL.Data.Entity
         [Required]
         public decimal Amount { get; set; }
 
+        public decimal FeeAmount { get; set; }
+
         public string PaymentBeneficiary { get; set; }
 
         public DateTime PaymentDate { get; set; }

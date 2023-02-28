@@ -65,6 +65,7 @@ namespace RapidPayITL.Service
                     {
                         CardNumber = payment.CardNumber,
                         Amount = payment.Amount,
+                        FeeAmount = _feeService.FeeFactor,
                         PaymentDate = payment.PaymentDate,
                         PaymentBeneficiary = payment.PaymentBeneficiary
                     };
