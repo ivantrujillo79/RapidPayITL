@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RapidPayITL.Service;
 
 namespace RapidPayITL.Controllers
 {
@@ -6,12 +7,17 @@ namespace RapidPayITL.Controllers
     [ApiController]
     public class CardManagementController : ControllerBase
     {
-        public CardManagementController() { }
+        CardManagementService _cardManagementService;
+        public CardManagementController(CardManagementService cardManagementService) 
+        { 
+            _cardManagementService = cardManagementService;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Balance(string cardNumber)
         {
-            return Ok("Good");
+            var balanceResult = await _cardManagementService.GetCardBalance(cardNumber);
+            return Ok(balanceResult);
         }
     }
 }

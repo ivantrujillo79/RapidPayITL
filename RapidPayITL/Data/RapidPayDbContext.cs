@@ -12,7 +12,9 @@ namespace RapidPayITL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Card>()
+                .HasMany(c => c.Payments)
+                .WithOne();
         }
 
         public DbSet<Card> Cards { get; set; }
