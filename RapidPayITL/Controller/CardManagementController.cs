@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RapidPayITL.Model;
 using RapidPayITL.Service;
 
 namespace RapidPayITL.Controllers
@@ -11,6 +12,13 @@ namespace RapidPayITL.Controllers
         public CardManagementController(CardManagementService cardManagementService) 
         { 
             _cardManagementService = cardManagementService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Card newCard)
+        {
+            var result = await _cardManagementService.CreateCard(newCard);
+            return Ok();
         }
 
         [HttpGet]

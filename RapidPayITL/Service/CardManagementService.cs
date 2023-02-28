@@ -13,6 +13,16 @@ namespace RapidPayITL.Service
             _rapidPayDbContext = rapidPayDBContext;
         }
 
+
+        public async Task<ProcessorResponse> CreateCard(Card newCard)
+        {
+            return new ProcessorResponse
+            {
+                Success = true,
+                Message = "The card has been successfully created"
+            };
+        }
+
         public async Task<CardBalance> GetCardBalance(string cardNumber)
         {
             try
