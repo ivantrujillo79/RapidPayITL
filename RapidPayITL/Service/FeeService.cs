@@ -2,24 +2,33 @@
 {
     public class FeeService
     {
-        private decimal currentFeeFactor = 0.01M;
+        private decimal currentFeeAmount = 0.01M;
         private static System.Timers.Timer FeeTimer = new System.Timers.Timer(100);
+        private decimal UEFFactor = 0;
+        private double defaultInterval = 36000000;
 
-        public decimal FeeFactor { get => currentFeeFactor; }
+        public decimal FeeAmount { get => this.currentFeeAmount; }
 
 
 
         public FeeService() 
         {
+            FeeTimer.AutoReset = true;
+            FeeTimer.Enabled = true;
             FeeTimer.Elapsed += CalculateFeeAmount;
             FeeTimer.Start();
-            FeeTimer.Interval = 36000000;
+            FeeTimer.Interval = defaultInterval;
 
         }
 
         private void CalculateFeeAmount(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            this.currentFeeFactor = 500.0M;
+            var seedGenerator = new Random();
+            var seed = (float)seedGenerator.Next(0, 1);
+            UEFFactor = (decimal)(seed + seedGenerator.NextSingle());
+
+            var totalAmount = currentFeeAmount * UEFFactor;
+            this.currentFeeAmount = totalAmount;
         }
     }
 }
