@@ -83,7 +83,7 @@ namespace RapidPayITL.Service
                 {
                     Success = true,
                     //Given the card number was not found, the transaction details are not returned given it can lead to a security breach
-                    Message = $"Error: The charge has been been rejected."
+                    Message = $"Error: The charge has been rejected."
                 };
             }
             catch (Exception)
