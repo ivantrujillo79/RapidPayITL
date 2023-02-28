@@ -31,16 +31,33 @@ namespace RapidPayITL.Service
                 return new ProcessorResponse
                 {
                     Success = true,
-                    Message = "The card has been successfully created"
+                    Message = $"The card {newCard.CardNumber} has been successfully created."
                 };
             }
             catch(Exception)
             {
                 throw;
             }
-
-
         }
+
+        public async Task<ProcessorResponse> ProcessPayment(NewPayment payment)
+        {
+            try
+            {
+
+
+                return new ProcessorResponse
+                {
+                    Success = true,
+                    Message = $"The card {payment.CardNumber} has been successfully charged with ${payment.Amount.ToString()}."
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         public async Task<CardBalance> GetCardBalance(string cardNumber)
         {

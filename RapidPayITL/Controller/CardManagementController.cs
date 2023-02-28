@@ -21,6 +21,14 @@ namespace RapidPayITL.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("payment")]
+        public async Task<IActionResult> Pay(NewPayment payment)
+        {
+            var result = await _cardManagementService.ProcessPayment(payment);
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<IActionResult> Balance(string cardNumber)
         {
