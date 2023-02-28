@@ -1,4 +1,5 @@
-﻿using RapidPayITL.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RapidPayITL.Data;
 using RapidPayITL.Model;
 
 namespace RapidPayITL.Service
@@ -16,7 +17,23 @@ namespace RapidPayITL.Service
         {
             try
             {
-                return new CardBalance { CardHolder = "Ivan", CardNumber="123456789012345", TotalAmount=500, Transactions = 5 };
+                var calculatedBalance = new CardBalance();
+                var queriedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == cardNumber);
+
+                if(queriedCard != null)
+                {
+                    calculatedBalance.CardHolder = queriedCard.HolderName;
+                    calculatedBalance.CardNumber = queriedCard.CardNumber;
+
+                    if(queriedCard.Payments.Count > 0)
+                    {
+                        calculatedBalance.Transactions = queriedCard.Payments.Count;
+                        calculatedBalance.TotalAmount = queriedCard.Payments.Sum(p => p.Amount);
+                    }
+                }
+
+
+                return calculatedBalance;
             }
             catch(Exception)
             {
