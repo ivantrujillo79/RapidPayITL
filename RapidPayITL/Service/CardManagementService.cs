@@ -18,20 +18,19 @@ namespace RapidPayITL.Service
             try
             {
                 var calculatedBalance = new CardBalance();
-                var queriedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == cardNumber);
+                var returnedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == cardNumber);
 
-                if(queriedCard != null)
+                if(returnedCard != null)
                 {
-                    calculatedBalance.CardHolder = queriedCard.HolderName;
-                    calculatedBalance.CardNumber = queriedCard.CardNumber;
+                    calculatedBalance.HolderName = returnedCard.HolderName;
+                    calculatedBalance.CardNumber = returnedCard.CardNumber;
 
-                    if(queriedCard.Payments.Count > 0)
+                    if(returnedCard.Payments.Count > 0)
                     {
-                        calculatedBalance.Transactions = queriedCard.Payments.Count;
-                        calculatedBalance.TotalAmount = queriedCard.Payments.Sum(p => p.Amount);
+                        calculatedBalance.Transactions = returnedCard.Payments.Count;
+                        calculatedBalance.TotalAmount = returnedCard.Payments.Sum(p => p.Amount);
                     }
                 }
-
 
                 return calculatedBalance;
             }
