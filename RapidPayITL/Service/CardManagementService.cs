@@ -18,7 +18,9 @@ namespace RapidPayITL.Service
             try
             {
                 var calculatedBalance = new CardBalance();
-                var returnedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == cardNumber);
+                var returnedCard = await _rapidPayDbContext.Cards
+                    .Include(c => c.Payments)
+                    .SingleOrDefaultAsync(c => c.CardNumber == cardNumber);
 
                 if(returnedCard != null)
                 {
