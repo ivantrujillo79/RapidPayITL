@@ -18,7 +18,7 @@ namespace RapidPayITL.Controllers
         public async Task<IActionResult> Create(NewCard newCard)
         {
             var result = await _cardManagementService.CreateCard(newCard);
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPost]
@@ -26,14 +26,14 @@ namespace RapidPayITL.Controllers
         public async Task<IActionResult> Pay(NewPayment payment)
         {
             var result = await _cardManagementService.ProcessPayment(payment);
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> Balance(string cardNumber)
         {
-            var balanceResult = await _cardManagementService.GetCardBalance(cardNumber);
-            return Ok(balanceResult);
+            var result = await _cardManagementService.GetCardBalance(cardNumber);
+            return Ok(result);
         }
     }
 }

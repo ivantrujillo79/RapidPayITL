@@ -8,10 +8,12 @@ namespace RapidPayITL.Service
     public class CardManagementService
     {
         RapidPayDbContext _rapidPayDbContext;
+        FeeService _feeService;
 
-        public CardManagementService(RapidPayDbContext rapidPayDBContext) 
+        public CardManagementService(RapidPayDbContext rapidPayDBContext, FeeService feeService) 
         { 
             _rapidPayDbContext = rapidPayDBContext;
+            _feeService = feeService;
         }
 
 
@@ -19,19 +21,30 @@ namespace RapidPayITL.Service
         {
             try
             {
-                var newEntityCard = new Card
+                var returnedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == newCard.CardNumber);
+
+                if (returnedCard == null)
                 {
-                    CardNumber = newCard.CardNumber,
-                    HolderName = newCard.HolderName
-                };
+                    var newEntityCard = new Card
+                    {
+                        CardNumber = newCard.CardNumber,
+                        HolderName = newCard.HolderName
+                    };
 
-                await _rapidPayDbContext.AddAsync(newEntityCard);
-                await _rapidPayDbContext.SaveChangesAsync();
+                    await _rapidPayDbContext.AddAsync(newEntityCard);
+                    await _rapidPayDbContext.SaveChangesAsync();
 
+                    return new ProcessorResponse
+                    {
+                        Success = true,
+                        Message = $"The card {newCard.CardNumber} has been successfully created."
+                    };
+                }
                 return new ProcessorResponse
                 {
-                    Success = true,
-                    Message = $"The card {newCard.CardNumber} has been successfully created."
+                    Success = false,
+                    //No additional information is provided given the card already exists, providing information can lead to a security breach
+                    Message = $"Rejected request."
                 };
             }
             catch(Exception)

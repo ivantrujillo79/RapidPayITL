@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<RapidPayDbContext>();
 builder.Services.AddScoped<CardManagementService>();
+builder.Services.AddSingleton<FeeService>();
 
 var app = builder.Build();
 
