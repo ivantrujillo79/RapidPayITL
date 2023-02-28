@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RapidPayITL.Data;
+using RapidPayITL.Data.Entity;
 using RapidPayITL.Model;
 
 namespace RapidPayITL.Service
@@ -18,7 +19,14 @@ namespace RapidPayITL.Service
         {
             try
             {
+                var newEntityCard = new Card
+                {
+                    CardNumber = newCard.CardNumber,
+                    HolderName = newCard.HolderName
+                };
 
+                await _rapidPayDbContext.AddAsync(newEntityCard);
+                await _rapidPayDbContext.SaveChangesAsync();
 
                 return new ProcessorResponse
                 {
