@@ -5,11 +5,14 @@ namespace RapidPayITL.Data.Entity
 {
     public class Payment
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key] 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         [Required]
         [MaxLength(15)]
         public string CardNumber { get; set; }
+
         [Required]
         public decimal Amount { get; set; }
 

@@ -9,6 +9,7 @@ namespace RapidPayITL.Model
         [RegularExpression("[0-9]{15}", ErrorMessage ="This card number is invalid")]
         public string CardNumber { get; set; }
         [Required]
+        [StringLength(25, ErrorMessage = "The max Card holder name's lenght must be 25 characters.")]
         public string HolderName { get; set; }
     }
 }

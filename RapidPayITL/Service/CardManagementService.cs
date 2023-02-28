@@ -21,7 +21,9 @@ namespace RapidPayITL.Service
         {
             try
             {
-                var returnedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == newCard.CardNumber);
+                var returnedCard = await _rapidPayDbContext.Cards
+                    .Include(c => c.Payments)
+                    .SingleOrDefaultAsync(c => c.CardNumber == newCard.CardNumber);
 
                 if (returnedCard == null)
                 {
@@ -57,7 +59,9 @@ namespace RapidPayITL.Service
         {
             try
             {
-                var returnedCard = await _rapidPayDbContext.Cards.Include(c => c.Payments).SingleOrDefaultAsync(c => c.CardNumber == payment.CardNumber);
+                var returnedCard = await _rapidPayDbContext.Cards
+                    .Include(c => c.Payments)
+                    .SingleOrDefaultAsync(c => c.CardNumber == payment.CardNumber);
 
                 if (returnedCard != null)
                 {
